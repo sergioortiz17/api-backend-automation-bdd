@@ -1,3 +1,11 @@
+TEST local: http://127.0.0.1:63206/
+![image](https://github.com/user-attachments/assets/b75a7cf4-5a37-42b3-ad5e-4c8ddb88264f)
+
+TEST en AWS: http://54.211.204.228:8080/index.html#
+Pipeline en instancia ec2 de aws exponiendo el reporte en el puerto 8080 de la ip publica de la instancia
+![image](https://github.com/user-attachments/assets/7ac3809b-6f36-41fd-951e-9c39db8a3964)
+![image](https://github.com/user-attachments/assets/35e2c797-7c29-4885-91d1-3dbcf3d6a552)
+
 # 📌 Backend API Testing Automation
 
 Este repositorio contiene un framework de **pruebas automatizadas** para APIs utilizando **Behave (BDD), Gherkin/Cucumber, Requests y Allure Reports**. Además, permite ejecutar las pruebas en **una instancia de AWS EC2**, exponiendo los reportes de Allure en un puerto accesible (8080) de la ip publica de la instancia .
