@@ -1,0 +1,15 @@
+# Framework de pruebas BDD
+behave==1.2.6
+
+# Framework de pruebas unitarias
+pytest==7.4.2
+pytest-bdd==6.1.1
+
+# Cliente HTTP para hacer llamadas a APIs
+requests==2.31.0
+
+# Reportes Allure para visualizar los resultados de las pruebas
+allure-pytest==2.13.2
+
+# Soporte para archivos JSON
+jsonschema==4.17.3

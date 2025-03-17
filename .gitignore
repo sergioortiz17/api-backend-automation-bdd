@@ -1,0 +1,21 @@
+# Ocultar archivos y carpetas de entornos virtuales de Python
+venv/
+.env
+*.pyc
+__pycache__/
+
+# Evitar archivos de configuración de Pytest y Behave en GitHub
+behave.ini
+pytest.ini
+
+# Ignorar reportes de Allure y logs de ejecución
+reportes/
+reports/
+allure-report/
+allure-results/
+*.log
+
+# Archivos de configuración y dependencias
+.DS_Store
+.idea/
+.vscode/
