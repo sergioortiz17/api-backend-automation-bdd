@@ -19,3 +19,9 @@ allure-results/
 .DS_Store
 .idea/
 .vscode/
+
+# Archivos de configuración y dependencias de Terraform
+terraform-ec2/.terraform/
+terraform-ec2/.terraform.lock.hcl
+terraform-ec2/terraform.tfstate
+terraform-ec2/terraform.tfstate.backup

@@ -27,22 +27,23 @@ cd api-backend-automation-bdd
 EOF
 
 echo "📌 Instalando dependencias del proyecto..."
-sudo pip3 install "urllib3<2.0" --force-reinstall
-sudo pip3 install allure-behave==2.13.2 allure-python-commons==2.13.2 --force-reinstall
-sudo pip3 install requests<=2.29.0
-sudo pip3 install -r /home/ec2-user/api-backend-automation-bdd/requirements.txt
+sudo -u ec2-user -i bash <<EOF
+pip3 install "urllib3<2.0" --force-reinstall
+pip3 install allure-behave==2.13.2 allure-python-commons==2.13.2 --force-reinstall
+pip3 install requests<=2.29.0
+pip3 install -r ~/api-backend-automation-bdd/requirements.txt
+EOF
 
 echo "🚀 Ejecutando pruebas Behave con Allure y Pytest..."
 sudo -u ec2-user -i bash <<EOF
 cd ~/api-backend-automation-bdd
-behave -f allure_behave.formatter:AllureFormatter -o reports/allure-results features/
-pytest tests --alluredir=reports/allure-results
+behave -f allure_behave.formatter:AllureFormatter -o reportes/ features/
 EOF
 
 echo "📊 Generando y sirviendo el reporte de Allure en el puerto 8080..."
 sudo -u ec2-user -i bash <<EOF
 cd ~/api-backend-automation-bdd
-nohup allure serve reports/allure-results --host 0.0.0.0 --port 8080 > ~/allure.log 2>&1 &
+allure serve reportes/ --port 8080
 EOF
 
 echo "🌎 Obteniendo IP pública de la instancia..."
