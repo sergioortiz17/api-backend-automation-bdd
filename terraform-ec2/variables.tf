@@ -19,6 +19,6 @@ variable "instance_type" {
 variable "instance_name" {
   description = "Nombre de la instancia EC2"
   type        = string
-  default     = "api-automation-ec2-instance-4"
+  default     = "api-automation-ec2-instance-sergio-0"
 }
 
