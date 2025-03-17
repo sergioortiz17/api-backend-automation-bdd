@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  tests:
+    build: .
+    volumes:
+      - .:/app
+    depends_on:
+      - allure
+    command: ["behave", "-f", "allure_behave.formatter:AllureFormatter", "-o", "reportes/", "features/"]
+
+  allure:
+    build:
+      context: .
+      dockerfile: allure.Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./reportes:/app/reportes

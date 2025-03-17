@@ -15,10 +15,6 @@ sudo systemctl start docker
 sudo systemctl enable docker
 sudo usermod -aG docker ec2-user
 
-echo "💾 Instalando Allure..."
-wget -qO - https://github.com/allure-framework/allure2/releases/download/2.21.0/allure-2.21.0.tgz | sudo tar -xz -C /opt/
-sudo ln -s /opt/allure-2.21.0/bin/allure /usr/bin/allure
-
 echo "📂 Clonando el repositorio de pruebas..."
 sudo -u ec2-user -i bash <<EOF
 cd ~
@@ -26,24 +22,10 @@ git clone https://github.com/sergioortiz17/api-backend-automation-bdd.git
 cd api-backend-automation-bdd
 EOF
 
-echo "📌 Instalando dependencias del proyecto..."
-sudo -u ec2-user -i bash <<EOF
-pip3 install "urllib3<2.0" --force-reinstall
-pip3 install allure-behave==2.13.2 allure-python-commons==2.13.2 --force-reinstall
-pip3 install requests<=2.29.0
-pip3 install -r ~/api-backend-automation-bdd/requirements.txt
-EOF
-
-echo "🚀 Ejecutando pruebas Behave con Allure y Pytest..."
+echo "🚀 Ejecutando pruebas y levantando Allure con Docker..."
 sudo -u ec2-user -i bash <<EOF
 cd ~/api-backend-automation-bdd
-behave -f allure_behave.formatter:AllureFormatter -o reportes/ features/
-EOF
-
-echo "📊 Generando y sirviendo el reporte de Allure en el puerto 8080..."
-sudo -u ec2-user -i bash <<EOF
-cd ~/api-backend-automation-bdd
-allure serve reportes/ --port 8080
+docker-compose up --build -d
 EOF
 
 echo "🌎 Obteniendo IP pública de la instancia..."
