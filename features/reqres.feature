@@ -10,5 +10,5 @@ Feature: Pruebas de integración con ReqRes API
     Examples:
       | name             | job            |
       | Sergio Ortiz     | QA Engineer    |
-      | Jane Smith   | Developer      |
-      # | Alex Brown   | Data Analyst   |
+      | Jane Smith       | Developer      |
+      | Gabriela Ortiz   | Data Analyst   |
