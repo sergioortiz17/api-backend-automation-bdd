@@ -13,3 +13,5 @@ Feature: Pruebas de integración con ReqRes API
       | Jane Smith       | Developer      |
       | Gabriela Ortiz   | Data Analyst   |
       | Jazmin Luna      | QA Automation Engineer |
+      | Nico Martinez    | iOS Developer Engineer |
+      | Cris Benelli     | Android Developer Engineer |
