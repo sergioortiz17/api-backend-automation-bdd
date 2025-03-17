@@ -1,11 +1,10 @@
 # 📌 Backend API Testing Automation
 
-Este repositorio contiene un framework de **pruebas automatizadas** para APIs utilizando **Behave (BDD), Pytest, Requests y Allure Reports**. Además, permite ejecutar las pruebas en **una instancia de AWS EC2**, exponiendo los reportes de Allure en un puerto accesible.
+Este repositorio contiene un framework de **pruebas automatizadas** para APIs utilizando **Behave (BDD), Gherkin/Cucumber, Requests y Allure Reports**. Además, permite ejecutar las pruebas en **una instancia de AWS EC2**, exponiendo los reportes de Allure en un puerto accesible (8080) de la ip publica de la instancia .
 
 ## 🚀 **Tecnologías utilizadas**
 - **Python 3.9+**
 - **Behave (Gherkin/Cucumber)** para pruebas BDD
-- **Pytest** para pruebas de integración
 - **Requests** para interactuar con APIs
 - **Allure Reports** para visualización de resultados
 - **AWS EC2** para ejecución en la nube
@@ -25,16 +24,15 @@ api-backend-automation-bdd/
 │   ├── api/                   # Módulo de las APIs
 │   │   ├── reqres_api.py       # Lógica de llamadas a ReqRes API
 │   │   ├── jsonplaceholder_api.py # Lógica de llamadas a JSONPlaceholder API
-│── tests/                      # Pruebas con Pytest
-│   ├── test_reqres.py          # Prueba unitaria/integración ReqRes API
-│   ├── test_jsonplaceholder.py # Prueba unitaria/integración JSONPlaceholder API
-│── reports/                    # Reportes de Allure
+│── reportes/                    # Reportes de Allure (en .gitignore se genera al correr los tests)
 │── requirements.txt             # Dependencias del proyecto
 │── behave.ini                   # Configuración de Behave
-│── pytest.ini                   # Configuración de Pytest
 │── .github/workflows/test.yml   # Configuración de GitHub Actions
 │── README.md                    # Documentación
 │── .gitignore                    # Archivos ignorados
+│── terraform-ec2/               # Directorio para crear instancias ec2 y correr tests en aws
+│── docker-compose.yml          # Orquesta el Dockerfile y el allure.Dockerfile para levantar y exponer el reporte online
+│── .github/workflows/api_tests.yml          # Pipeline de github actions para ejecutar tests en aws por cada commit pusheado remotamente
 ```
 
 ---
@@ -54,17 +52,12 @@ pip3 install -r requirements.txt
 ### **3️⃣ Ejecutar las pruebas**
 #### 🔹 **Ejecutar pruebas Behave (BDD)**
 ```bash
-behave --format pretty --outfile=reports/allure-results
-```
-
-#### 🔹 **Ejecutar pruebas Pytest**
-```bash
-pytest tests --alluredir=reports/allure-results
+behave --format allure_behave.formatter:AllureFormatter -o reportes/
 ```
 
 ### **4️⃣ Ver reportes con Allure**
 ```bash
-allure serve reports/allure-results
+allure serve reportes/
 ```
 
 ---
@@ -72,9 +65,12 @@ allure serve reports/allure-results
 ## 🌍 **Cómo ejecutarlo en una instancia AWS EC2**
 
 ### **1️⃣ Lanzar una instancia AWS EC2**
-- Seleccionar **Amazon Linux 2** o **Ubuntu**.
-- Configurar el grupo de seguridad para abrir el **puerto 8080** (para ver Allure Reports).
-- En la sección **User Data**, uso un script que configura la instancia clonando el repo e instalando sus dependencias y ejecutandolo
+- CLona el repo y ve al folder de terraform-ec2 alli debes tener configurado aws cli ejecuta 
+```bash
+terraform init                                                      
+terraform apply -auto-approve
+```
+- En la sección **User Data**, uso un script que configura la instancia clonando el repo e instalando sus dependencias y ya levanta automaticamente el docker-compose que expone el resultado de los tests
 
 
 ### **2️⃣ Acceder al reporte de Allure**
@@ -83,13 +79,18 @@ allure serve reports/allure-results
    ```
    http://<IP_PUBLICA_DE_LA_INSTANCIA>:8080
    ```
+A fecha de hoy 17/03/2025
+tengo una instancia corriendo en aws donde podes ver los resultados aca
+   ```
+    http://54.211.204.228:8080/index.html#
+   ```
 
 ---
 
 ## ✅ **Integración con CI/CD en GitHub Actions**
 Las pruebas se ejecutan automáticamente en cada **push** o **pull request** al repositorio.
 
-📌 **Ver configuración en:** `.github/workflows/test.yml`
+📌 **Ver configuración en:** `.github/workflows/api_tests.yml`
 
 Para ver los resultados:
 1. Ir a **GitHub > Actions**.
@@ -101,7 +102,7 @@ Para ver los resultados:
 ## 📌 **Contacto y Contribuciones**
 Si quieres contribuir con este proyecto:
 1. **Haz un fork** del repositorio.
-2. **Crea una rama** para tu mejora (`git checkout -b feature/nueva-mejora`).
+2. **Crea una rama** para tu mejora (`git checkout -b feature/new-feature`).
 3. **Haz un pull request** explicando los cambios.
 
 📌 **Cualquier duda o sugerencia, contáctame en GitHub!** 🚀

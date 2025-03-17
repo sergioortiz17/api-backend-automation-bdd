@@ -12,3 +12,4 @@ Feature: Pruebas de integración con ReqRes API
       | Sergio Ortiz     | QA Engineer    |
       | Jane Smith       | Developer      |
       | Gabriela Ortiz   | Data Analyst   |
+      | Jazmin Luna      | QA Automation Engineer |
