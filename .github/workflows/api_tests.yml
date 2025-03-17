@@ -1,0 +1,33 @@
+name: Deploy and Run API Tests on EC2
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Connect and Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_IP }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            echo "🔄 Conectado a EC2, actualizando código..."
+            cd ~/api-backend-automation-bdd
+            git pull origin main
+
+            echo "🛑 Deteniendo contenedores..."
+            docker-compose down
+
+            echo "🚀 Levantando contenedores nuevamente..."
+            docker-compose up --build -d
+
+            echo "✅ Pruebas ejecutadas y Allure Server reiniciado en http://$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4):8080"
