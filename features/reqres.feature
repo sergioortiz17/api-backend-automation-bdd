@@ -15,3 +15,4 @@ Feature: Pruebas de integración con ReqRes API
       | Jazmin Luna      | QA Automation Engineer |
       | Nico Martinez    | iOS Developer Engineer |
       | Cris Benelli     | Android Developer Engineer |
+      | Ignacio  | Director rrhh |
